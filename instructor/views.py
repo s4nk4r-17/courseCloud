@@ -35,4 +35,4 @@ class InstructorCreateView(View):
         else:
 
             return render(request,'instructor_register.html',{'form':form_instance})
-        
+            
