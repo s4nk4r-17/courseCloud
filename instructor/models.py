@@ -68,7 +68,9 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
-    
+
+from django.db.models import Max
+
 class Module(models.Model):
 
     title=models.CharField(max_length=200)
@@ -79,6 +81,16 @@ class Module(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self,*args,**kwargs):
+
+        max_order=Module.objects.filter(course_object=self.course_object).aggregate(max=Max('order'))
+
+        self.order=max_order+1
+
+        self.save()
+    
+
     
 # Lesson
 # =>title
